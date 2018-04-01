@@ -1,0 +1,57 @@
+// https://leetcode.com/contest/weekly-contest-78/problems/expressive-words/
+
+class Solution {
+public:
+    int expressiveWords(string S, vector<string>& words) {
+        int total = 0;
+        for(int i=0; i<words.size(); i++)
+        {
+            string query = words[i];
+            
+            int sptr = 0;
+            int qptr = 0;
+            char prev;
+            int qrep = 0;
+            
+            bool exten = false;
+            while(sptr<S.length())
+            {
+                if(exten == true && qrep < 3 && S[sptr] != prev)
+                {
+                    break;
+                }
+
+                if(qptr<query.length() && S[sptr] == query[qptr])
+                {
+                    if(sptr == 0 || S[sptr]!=prev)
+                    {
+                        qrep = 0;
+                        exten = false;
+                    }
+                    prev = query[qptr];
+                    sptr ++;
+                    qptr ++;
+                    qrep ++;
+                }
+                else
+                {
+                    if(S[sptr] == prev)
+                    {
+                        exten = true;
+                        sptr++;
+                        qrep++;
+                    }
+                    else
+                    {
+                        break;
+                    }
+                }
+            }
+            if(sptr == S.length() && qptr == query.length())
+            {
+                total ++;
+            }
+        }
+        return total;
+    }
+};
