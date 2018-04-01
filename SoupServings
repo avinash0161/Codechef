@@ -1,0 +1,97 @@
+//https://leetcode.com/contest/weekly-contest-78/problems/soup-servings/
+
+//
+// Created by Avinash Kumar on 3/31/18.
+//
+
+#include<iostream>
+#include<string>
+#include<vector>
+#include "math.h"
+using namespace std;
+
+void ChangeVal(int i,int j, vector<vector<double>> &prob)
+{
+    int x = (i-4>=0)?i-4:0;
+    int y = j;
+    if(prob[x][y] > 0)
+    {
+        prob[x][y] += prob[i][j]*0.25;
+    }
+    else
+    {
+        prob[x][y] = prob[i][j]*0.25;
+    }
+
+    x = (i-3>=0)?i-3:0;
+    y = (j-1>=0)?j-1:0;
+    if(prob[x][y] > 0)
+    {
+        prob[x][y] += prob[i][j]*0.25;
+    }
+    else
+    {
+        prob[x][y] = prob[i][j]*0.25;
+    }
+
+    x = (i-2>=0)?i-2:0;
+    y = (j-2>=0)?j-2:0;
+    if(prob[x][y] > 0)
+    {
+        prob[x][y] += prob[i][j]*0.25;
+    }
+    else
+    {
+        prob[x][y] = prob[i][j]*0.25;
+    }
+
+    x = (i-1>=0)?i-1:0;
+    y = (j-3>=0)?j-3:0;
+    if(prob[x][y] > 0)
+    {
+        prob[x][y] += prob[i][j]*0.25;
+    }
+    else
+    {
+        prob[x][y] = prob[i][j]*0.25;
+    }
+}
+
+double FindSol(int N)
+{
+    int highLim = ceil(N*1.0/25.0);
+    vector<vector<double>> prob;
+    prob.resize(highLim+1);
+    for(int i=0; i<highLim+1;i++)
+    {
+        prob[i].resize(highLim+1,-1.0);
+    }
+
+    prob[highLim][highLim] = 1.0;
+
+    for(int i=highLim; i>=1; i--)
+    {
+        for(int j=highLim; j>=1; j--)
+        {
+            if((i==highLim && j==highLim) || prob[i][j] != -1)
+            {
+                ChangeVal(i,j, prob);
+            }
+        }
+    }
+
+    double ret = 0.0;
+    for(int i=1;i<=highLim; i++)
+    {
+        ret += prob[0][i];
+    }
+    ret += prob[0][0]/2;
+
+    cout<< ret;
+}
+
+int main()
+{
+    int N=100;
+    cout << FindSol(N);
+}
