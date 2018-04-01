@@ -4,6 +4,8 @@
 // Created by Avinash Kumar on 3/31/18.
 //
 
+//Solution valid for small N
+
 #include<iostream>
 #include<string>
 #include<vector>
